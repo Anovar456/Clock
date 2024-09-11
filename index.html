@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Clock Widget</title>
+  <!-- Importation de la police Impact si nécessaire -->
+  <style>
+    body {
+      font-family: 'Impact', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: white; /* Change si nécessaire */
+    }
+
+    .clock-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .time-wrapper {
+      position: relative;
+    }
+
+    .time-box {
+      font-size: 135px; /* Taille plus imposante */
+      padding: 60px 40px;
+      border-radius: 20px;
+      background-color: black; /* Fond noir permanent */
+      color: white; /* Texte blanc permanent */
+      text-align: center;
+      position: relative;
+      height: 200px; /* Plus haut */
+      width: 120px;  /* Moins large */
+      display: flex; /* Utilisation de flex pour le centrage */
+      justify-content: center; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); /* Garde l'ombre portée pour l'esthétique */
+    }
+
+    /* Bande blanche horizontale plus fine et qui va jusqu'au bord */
+    .time-box::before {
+      content: "";
+      position: absolute;
+      width: 100%; /* Longueur totale du rectangle */
+      height: 1px; /* Épaisseur plus fine */
+      background-color: white; /* Bande blanche */
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    /* Le jour de la semaine est affiché dans le rectangle des minutes en bas à droite */
+    #day-minutes {
+      position: absolute;
+      bottom: 10px;
+      right: 10px; /* Positionné à droite dans le second rectangle */
+      font-size: 16px;
+      color: white; /* Texte blanc permanent */
+      text-transform: capitalize; /* Met la première lettre du jour en majuscule */
+    }
+
+    /* Aucun jour affiché dans le premier rectangle */
+    #day-hours {
+      display: none; /* On n'affiche pas le jour dans le premier rectangle */
+    }
+
+    .separator {
+      width: 10px;
+      background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clock-container">
+    <div class="time-wrapper">
+      <div id="hours" class="time-box"></div>
+      <div id="day-hours" class="day-of-week"></div>
+    </div>
+    <div class="separator"></div>
+    <div class="time-wrapper">
+      <div id="minutes" class="time-box"></div>
+      <div id="day-minutes" class="day-of-week"></div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayOfWeek = days[now.getDay()];
+
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('day-hours').textContent = dayOfWeek;
+      document.getElementById('day-minutes').textContent = dayOfWeek;
+    }
+
+    setInterval(updateClock, 60000);
+    updateClock();
+  </script>
+
+</body>
+</html>
